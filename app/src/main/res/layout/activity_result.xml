@@ -71,7 +71,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/guideline1"
-        app:srcCompat="@drawable/ball_01" />
+        app:srcCompat="@drawable/ball_03" />/>
 
     <ImageView
         android:id="@+id/imageView02"
