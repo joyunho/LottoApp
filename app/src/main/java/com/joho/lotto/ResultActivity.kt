@@ -1,11 +1,12 @@
 package com.joho.lotto
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_result.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ResultActivity : AppCompatActivity() {
 
@@ -18,6 +19,14 @@ class ResultActivity : AppCompatActivity() {
 
         // 전달받은 결과 배열을 가져온다
         val result = intent.getIntegerArrayListExtra("result")
+
+        // 전달받은 이름을 가져온다.
+        val name = intent.getStringExtra("name")
+
+        // 결과화면 기본 텍스트
+        if(!TextUtils.isEmpty(name)){
+            resultLabel.text = "${name}님의\n${SimpleDateFormat("yyyy년 MM월 dd일").format(Date())}\n로또 번호입니다."
+        }
 
         // 전달받은 결과가 있는 경우에만 실행
         result?.let{
@@ -37,6 +46,7 @@ class ResultActivity : AppCompatActivity() {
         // ex) result[0]이 2번 공인 경우 ball_01에서 하나 뒤에 이미지가 된다.
         imageView01.setImageResource(lottoImageStartId + (result[0] - 1))
         imageView02.setImageResource(lottoImageStartId + (result[1] - 1))
+        imageView03.setImageResource(lottoImageStartId + (result[2] - 1))
         imageView03.setImageResource(lottoImageStartId + (result[2] - 1))
         imageView04.setImageResource(lottoImageStartId + (result[3] - 1))
         imageView05.setImageResource(lottoImageStartId + (result[4] - 1))
