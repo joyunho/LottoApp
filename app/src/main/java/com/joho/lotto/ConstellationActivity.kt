@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.CalendarView
 import android.widget.DatePicker
-import android.widget.Toast
+import com.akj.lotto.LottoNumberMaker
 import kotlinx.android.synthetic.main.activity_constellation.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ConstellationActivity : AppCompatActivity() {
 
@@ -17,8 +18,21 @@ class ConstellationActivity : AppCompatActivity() {
 
         // 로또 번호 확인 버튼의 클릭이벤트 리스너 설정
         goResultButton.setOnClickListener{
-            // ResultActivity를 시작하는 인텐트 만들고 startActivity 로 실행
-            startActivity(Intent(this, ResultActivity::class.java))
+            // ResultActivity를 시작하는 Intent 생성
+            val intent = Intent(this, ResultActivity::class.java)
+
+            // intent 의 결과 데이터를 전달한다.
+            // int 의 리스트를 전달하므로 putIntegerArrayListExtra 를 사용한다.
+            // 전달하는 리스트는 별자리의 해시코드로 생성한 로또 번호
+            intent.putIntegerArrayListExtra("result", ArrayList(LottoNumberMaker.getLottoNumbersFromHash(
+                makeConstellationString(datePicker.month, datePicker.dayOfMonth) as String
+            )))
+
+            // 별자리를 추가로 전달한다.
+            intent.putExtra("constellation", makeConstellationString(datePicker.month, datePicker.dayOfMonth))
+
+            // ResultActivity 를 시작하는 Intent 를 만들고 startActivity 로 실행
+            startActivity(intent)
         }
 
 
@@ -34,13 +48,16 @@ class ConstellationActivity : AppCompatActivity() {
                 textView.text = makeConstellationString(datePicker.month, datePicker.dayOfMonth)
             }
 
-            override fun onSelectedDayChange(view: CalendarView?, year: Int, month: Int, dayOfMonth: Int) {
-            }
+            override fun onSelectedDayChange(
+                view: CalendarView,
+                year: Int,
+                month: Int,
+                dayOfMonth: Int
+            ) {}
         })
     }
 
-
-
+    // 전달받은 월정보, 일정보 기준으로 별자리를 반환한다.
     fun makeConstellationString(month: Int, day: Int): CharSequence? {
         // 전달받은 월 정보와 일 정보를 기반으로 정수형태의 값을 만든다.
         // ex) 1월 5일 --> 105, 11월 1일 --> 1101
@@ -60,7 +77,7 @@ class ConstellationActivity : AppCompatActivity() {
             in 1023..1122 -> return "전갈자리"
             in 1123..1124 -> return "사수자리"
             in 1125..1231 -> return "염소자리"
-            else -> retrun "기타별자리"
+            else -> return "기타별자리"
         }
     }
 

@@ -17,15 +17,23 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
 
-        // 전달받은 결과 배열을 가져온다
+        // 전달받은 결과 배열을 가져온다.
         val result = intent.getIntegerArrayListExtra("result")
 
         // 전달받은 이름을 가져온다.
         val name = intent.getStringExtra("name")
 
+        // 전달받은 별자리를 가져온다.
+        val constellation = intent.getStringExtra("constellation")
+
         // 결과화면 기본 텍스트
         if(!TextUtils.isEmpty(name)){
             resultLabel.text = "${name}님의\n${SimpleDateFormat("yyyy년 MM월 dd일").format(Date())}\n로또 번호입니다."
+        }
+
+        // name 이 전달된 경우 결과화면의 텍스트를 변경
+        if(!TextUtils.isEmpty(name)){
+            resultLabel.text = "${name} 님의\n${SimpleDateFormat("yyyy년 MM월 dd일").format(Date())}\n로또 번호입니다"
         }
 
         // 전달받은 결과가 있는 경우에만 실행
