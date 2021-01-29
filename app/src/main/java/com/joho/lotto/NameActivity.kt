@@ -32,7 +32,7 @@ class NameActivity : AppCompatActivity() {
 
             // ResultActivity 를 시작하는 Intedt 를 만들고 startActivity 로 실행
             startActivity(intent)
-        }
+    }
 
         // 뒤로가기 버튼의 클릭이벤트 리스너 설정
         backButton.setOnClickListener({
